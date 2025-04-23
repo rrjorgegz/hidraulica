@@ -1,5 +1,5 @@
 {
-    "name": "Suit Hidráulica",
+    "name": "Suit Hidraulica",
     "summary": "Short (1 phrase/line) summary of the module's purpose",
     "author": "ADATECS.surl",
     "website": "https://www.desoft.cu",

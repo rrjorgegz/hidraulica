@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   web:
-    image: rrjorgegz/hidraulica:17.0.0
+    image: rrjorgegz/hidraulica:17.0
     environment:
       - HOST=db
       - USER=odoo
