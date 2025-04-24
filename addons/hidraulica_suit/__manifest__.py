@@ -1,6 +1,6 @@
 {
     "name": "Suit Hidráulica",
-    "summary": "Short (1 phrase/line) summary of the module's purpose",
+    "summary": "Hidráulica VC",
     "author": "ADATECS.surl",
     "website": "https://www.desoft.cu",
     # Categories can be used to filter modules in modules listing
