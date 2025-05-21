@@ -1,5 +1,5 @@
 {
-    "name": "Suit Hidráulica",
+    "name": "Hidráulica",
     "summary": "Hidráulica VC",
     "author": "ADATECS.surl",
     "website": "https://www.desoft.cu",
