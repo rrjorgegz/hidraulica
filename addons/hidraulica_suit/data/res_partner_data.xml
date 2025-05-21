@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="state_vcl" model="res.country.state">
+        <field name="name">Villa Clara</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="code">VCL</field>
+    </record>
+
+    <record id="state_cfg" model="res.country.state">
+        <field name="name">Cienfuegos</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="code">CFG</field>
+    </record>
+
+    <record id="state_ssp" model="res.country.state">
+        <field name="name">Santi Spiritus</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="code">SSP</field>
+    </record>
+
+    <record id="base.main_partner" model="res.partner">
+        <field name="name">EES Empresa de Servicios Ingenieros Hidráulicos VC</field>
+        <field name="street">Jesús Menéndez 199 e/ Carretera Central y Tristá</field>
+        <field name="city">Santa Clara</field>
+        <field name="phone">42224487</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_vcl" />
+        <field name="vat">01005336810</field>
+        <field name="code">113/907-0-13509</field>
+        <field name="currency_id" ref="base.CUP" />
+        <field name="director_g">Ing.Jose Ramón Comas</field>
+        <field name="director_td">Ing.Rolando C.Martinez Molina</field>
+        <field name="director_hhrr">Yaima Kirenia Rodriguez Ocampo</field>
+        <field name="director_a">Yaiselin Morales Ramos</field>
+    </record>
+
+    <record id="ssp_partner" model="res.partner">
+        <field name="name">SS</field>
+        <field name="company_id" eval="None" />
+        <field name="is_company" eval="True" />
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_ssp" />
+        <field name="street" />
+        <field name="city">Santi Spiritus</field>
+        <field name="phone" />
+        <field name="code">P-06</field>
+        <field name="currency_id" ref="base.CUP" />
+    </record>
+
+    <record id="cfg_partner" model="res.partner">
+        <field name="name">Cfgos</field>
+        <field name="company_id" eval="None" />
+        <field name="is_company" eval="True" />
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_cfg" />
+        <field name="street">Avenida 24 s/n e/ 57 y 59 Cienfuegos.</field>
+        <field name="city">Cienfuegos</field>
+        <field name="phone">0143-550048-518861-Ext 110</field>
+        <field name="currency_id" ref="base.CUP" />
+        <field name="especialista">Henry Aguilera Castillo</field>
+    </record>
+
+    <record id="vcl_partner" model="res.partner">
+        <field name="name">VC</field>
+        <field name="company_id" eval="None" />
+        <field name="is_company" eval="True" />
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_vcl" />
+        <field name="street">Libertadores 201 e/ Jesús Menéndez y Danielito VC</field>
+        <field name="city">Santa Clara</field>
+        <field name="phone">221186 - 281936</field>
+        <field name="code">P-05</field>
+        <field name="currency_id" ref="base.CUP" />
+        <field name="especialista">Mgalys Prieto Padilla</field>
+    </record>
+
+</odoo>

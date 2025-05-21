@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+
+    <record id="hidraulica_view_partner_view_form" model="ir.ui.view">
+        <field name="name">hidraulica.view_partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority" eval="50" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="hidraulica_tab" string="Información de Hidraulica">
+                    <group name="h0_tab">
+                        <group name="ha1_tab">
+                            <field name="code" />
+                            <field name="especialista" />
+                        </group>
+                        <group name="ha2_tab">
+                            <field name="director_g" />
+                            <field name="director_td" />
+                            <field name="director_hhrr" />
+                            <field name="director_a" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

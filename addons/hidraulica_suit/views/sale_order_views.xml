@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hidraulica_view_order_form" model="ir.ui.view">
+        <field name="name">hidraulica.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="hidraulica_tab" string="Información de Hidraulica">
+                    <group name="hso1_tab">
+                        <group name="hso11_tab">
+                            <field name="type_service" />
+                            <field name="code_inv" />
+                            <field name="program_id" />
+                            <field name="inv_direct" />
+                            <field name="benefited_pop" />
+                        </group>
+                        <group name="hso12_tab">
+                            <field name="is_existente_mep" />
+                            <field name="is_prp" />
+                            <field name="is_proyect" />
+                            <field name="is_microlocalization" />
+                            <field name="is_defense" />
+                            <field name="is_citma" />
+                            <field name="is_licence" />
+                            <field name="is_timeline" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

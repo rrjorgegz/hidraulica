@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="work_program_form" model="ir.ui.view">
+        <field name="name">work_program.form</field>
+        <field name="model">work.program</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <group name="wp1_group">
+                        <group name="wp1_group">
+                            <field name="name" />
+                        </group>
+                        <group name="wp2_group">
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="work_program_tree_view" model="ir.ui.view">
+        <field name="name">work_program.tree.view</field>
+        <field name="model">work.program</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="work_program_action" model="ir.actions.act_window">
+        <field name="name">Programa</field>
+        <field name="res_model">work.program</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="work_program_menu"
+    name="Programa"
+    action="work_program_action"
+    parent="sale.menu_sale_config"
+  />
+
+</odoo>

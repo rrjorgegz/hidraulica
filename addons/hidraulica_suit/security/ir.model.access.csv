@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hidraulica_suit_hidraulica_suit,hidraulica_suit.hidraulica_suit,model_hidraulica_suit_hidraulica_suit,base.group_user,1,1,1,1
+access_work_program_all,work_program_all,model_work_program,base.group_user,1,1,1,1

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="base.main_company" model="res.company">
+        <field name="name">ESS Empresa de Servicios Ingenieros Hidráulicos VC</field>
+        <field name="currency_id" ref="base.CUP" />
+        <field name="street">Jesús Menéndez 199 e/ Carretera Central y Tristá</field>
+        <field name="city">Santa Clara</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_vcl" />
+    </record>
+
+    <record id="ssp_company" model="res.company">
+        <field name="name">SS</field>
+        <field name="partner_id" ref="ssp_partner" />
+        <field name="currency_id" ref="base.CUP" />
+        <field name="city">Santi Spiritus</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_ssp" />
+        <field name="parent_id" ref="base.main_company" />
+    </record>
+
+    <record id="cfg_company" model="res.company">
+        <field name="name">Cfgos</field>
+        <field name="partner_id" ref="cfg_partner" />
+        <field name="currency_id" ref="base.CUP" />
+        <field name="street">Avenida 24 s/n e/ 57 y 59 Cienfuegos.</field>
+        <field name="city">Cienfuegos</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_cfg" />
+        <field name="parent_id" ref="base.main_company" />
+    </record>
+
+    <record id="vcl_company" model="res.company">
+        <field name="name">VC</field>
+        <field name="partner_id" ref="vcl_partner" />
+        <field name="currency_id" ref="base.CUP" />
+        <field name="street">Libertadores 201 e/ Jesús Menéndez y Danielito VC</field>
+        <field name="city">Santa Clara</field>
+        <field name="country_id" ref="base.cu" />
+        <field name="state_id" ref="state_vcl" />
+        <field name="parent_id" ref="base.main_company" />
+    </record>
+
+</odoo>

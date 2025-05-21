@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="bcc_bank" model="res.bank">
+        <field name="name">Banco Central de Cuba</field>
+    </record>
+
+    <record id="bandec_bank" model="res.bank">
+        <field name="name">4321-BANDEC</field>
+    </record>
+
+    <record id="bandec_partner_bank" model="res.partner.bank">
+        <field name="acc_number">0643221231270010</field>
+        <field name="bank_id" ref="bandec_bank" />
+        <field name="partner_id" ref="base.main_company" />
+        <field name="currency_id" ref="base.CUP" />
+    </record>
+
+</odoo>
