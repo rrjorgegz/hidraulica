@@ -26,3 +26,37 @@ class SaleOrder(models.Model):
     is_citma = fields.Boolean(string="Tiene dictamen del CITMA")
     is_licence = fields.Boolean(string="Tiene licencia de obra")
     is_timeline = fields.Boolean(string="Tiene Cronograma de ejecución de obra")
+    commission_type = fields.Selection(
+        [
+            ('full', 'Factura Completa (Costos + Comisión)'),
+            ('commission_only', 'Solo Comisión')
+        ],
+        string='Tipo de Comisión',
+        default='full'
+    )
+
+    def _create_invoices(self):  
+        invoice = super()._create_invoices()  
+        # Calcular costo total de proveedores (desde facturas vinculadas al centro analítico)  
+        total_cost = self.analytic_account_id.total_cost  
+        commission = total_cost * 0.05  # 5%  
+        # Borrar líneas de factura estándar (generadas desde SO)  
+        invoice.invoice_line_ids = False  
+        # Añadir línea de comisión  
+        invoice.write({  
+            'invoice_line_ids': [(0, 0, {  
+                'name': 'Comisión de Gestión (5%)',  
+                'price_unit': commission,  
+                'account_id': ... # Cuenta contable para comisiones  
+            })]  
+        })  
+        # Si es "full", añadir línea con costos de proveedores  
+        if self.commission_type == 'full':  
+            invoice.write({  
+                'invoice_line_ids': [(0, 0, {  
+                    'name': 'Costos de Proveedores',  
+                    'price_unit': total_cost,  
+                    'account_id': ... # Cuenta contable para costos  
+                })]  
+            })  
+        return invoice 

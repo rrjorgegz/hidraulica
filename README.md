@@ -6,8 +6,8 @@ Odoo para hidraulica VC
 - apt update
 - apt upgrade
 - crear usuario odoo (adduser odoo) y añadir a grupo sudo (usermod -aG sudo odoo)
-- (apt install wireguard resolvconf) y copiar para /etc/wireguard/ la configuracion de wg0.conf que se obtiene de descargar de tu cuenta protonvpn.com 
-- habilitar vpn (wg-quick up wg0) y desabilitar (wg-quick down wg0) para activar de forma permanente luego de habilitar vpn ponemos (systemct enable wg-quick) y desabilitar (systemct disable wg-quick),
+- (apt install wireguard resolvconf curl) y copiar para /etc/wireguard/ la configuracion de wg0.conf que se obtiene de descargar de tu cuenta protonvpn.com 
+- habilitar vpn (wg-quick up wg0) y desabilitar (wg-quick down wg0) para activar de forma permanente luego de habilitar vpn ponemos (systemctl enable wg-quick@wg0.service) y desabilitar (systemctl disable wg-quick@wg0.service),
 - instalar docker https://docs.docker.com/engine/install/ubuntu/ 
     ```
         apt install ca-certificates curl

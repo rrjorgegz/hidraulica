@@ -1,0 +1,99 @@
+services:
+  web:
+    image: rrjorgegz/hidraulica:latest
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+    networks:
+      - odoo-net
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'http://127.0.0.1:8069'
+      interval: 2s
+      timeout: 10s
+      retries: 30
+    labels:
+      - com.centurylinklabs.watchtower.enable=true # Etiqueta para Watchtower
+      - "traefik.enable=true"
+      - "traefik.http.routers.odoo.rule=Host(`localhost`)"
+      - "traefik.http.routers.odoo.entrypoints=websecure"
+      - "traefik.http.routers.odoo.tls.certresolver=letsencrypt"
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - odoo-net
+    healthcheck: # Healthcheck para mejor manejo de dependencias
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  traefik:
+    image: traefik:v2.10
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=odoo@gmail.com
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080" # Panel de Traefik (opcional)
+    depends_on:
+      web:
+        condition: service_healthy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/acme.json:/letsencrypt/acme.json
+    restart: always
+    networks:
+      - odoo-net
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=30 # Verificación cada 30 segundos
+      - WATCHTOWER_CLEANUP=true # Limpieza automática
+      - WATCHTOWER_LABEL_ENABLE=true # Habilitar actualización por etiquetas
+      # - WATCHTOWER_REPO_USER=rrjorgegz
+      # - WATCHTOWER_REPO_PASS=tu_token
+    command: --debug
+    networks:
+      - odoo-net
+
+networks:
+  odoo-net:
+    driver: bridge
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
