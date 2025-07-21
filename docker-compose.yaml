@@ -33,7 +33,7 @@ services:
       - "traefik.http.services.odoo.loadbalancer.server.port=8069"
 
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
@@ -61,7 +61,7 @@ services:
       - --certificatesresolvers.letsencrypt.acme.email=odoo@gmail.com
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
     ports:
-      - "80:80"
+      - "81:80"
       - "443:443"
       - "8081:8080" # Panel de Traefik (opcional)
     depends_on:
