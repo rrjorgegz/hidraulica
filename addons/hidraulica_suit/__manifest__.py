@@ -16,7 +16,7 @@
         "account",
         "l10n_latam_base",
         "sale_margin",
-        "analytic"
+        "analytic",
     ],
     # always loaded
     "data": [
