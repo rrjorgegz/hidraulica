@@ -110,7 +110,7 @@
     id="menu_construction_contract_root"
     name="Contratación Obras"
     parent="sale.sale_menu_root"
-    sequence="60"
+    sequence="5"
   />
     <menuitem
     id="menu_construction_contract"
