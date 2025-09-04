@@ -24,11 +24,11 @@
         "data/res_partner_data.xml",
         "data/res_company_data.xml",
         "data/res_bank_data.xml",
-    # Views
+        # Views
         "views/work_program_views.xml",
         "views/sale_order_views.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",
-    "views/construction_contract_views.xml",
+        "views/construction_contract_views.xml",
     ],
 }

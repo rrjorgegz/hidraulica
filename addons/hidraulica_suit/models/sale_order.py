@@ -42,13 +42,19 @@ class SaleOrder(models.Model):
             contract = order.construction_contract_id
             if not contract:
                 continue
-            inv = invoice.filtered(lambda m: m.invoice_origin == order.name)
+            order_name = order.name
+            inv = invoice.filtered(
+                lambda m, order_name=order_name: m.invoice_origin == order_name
+            )
             if not inv:
                 continue
             inv.invoice_line_ids = [(5, 0, 0)]
             # Buscar una cuenta de ingresos (primer ingreso disponible)
             account_income = self.env["account.account"].search(
-                [("account_type", "=", "income"), ("company_id", "=", order.company_id.id)],
+                [
+                    ("account_type", "=", "income"),
+                    ("company_id", "=", order.company_id.id),
+                ],
                 limit=1,
             )
             lines = []
@@ -77,8 +83,10 @@ class SaleOrder(models.Model):
                     },
                 )
             )
-            inv.write({
-                "invoice_line_ids": lines,
-                "construction_contract_id": contract.id,
-            })
+            inv.write(
+                {
+                    "invoice_line_ids": lines,
+                    "construction_contract_id": contract.id,
+                }
+            )
         return invoice

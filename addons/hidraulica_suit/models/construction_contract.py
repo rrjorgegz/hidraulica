@@ -1,4 +1,4 @@
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -8,7 +8,9 @@ class ConstructionContract(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char(string="Referencia", required=True, copy=False, default="Nuevo")
-    partner_id = fields.Many2one("res.partner", string="Cliente", required=True, tracking=True)
+    partner_id = fields.Many2one(
+        "res.partner", string="Cliente", required=True, tracking=True
+    )
     project_name = fields.Char(string="Nombre de la Obra", required=True, tracking=True)
     sale_id = fields.Many2one("sale.order", string="Orden de Venta", copy=False)
     analytic_account_id = fields.Many2one(
@@ -17,7 +19,9 @@ class ConstructionContract(models.Model):
     program_id = fields.Many2one("work.program", string="Programa")
     estimated_cost = fields.Monetary(string="Costo Estimado Proveedores")
     commission_rate = fields.Float(
-        string="% Comisión", default=5.0, help="Porcentaje de comisión sobre los costos aceptados"
+        string="% Comisión",
+        default=5.0,
+        help="Porcentaje de comisión sobre los costos aceptados",
     )
     commission_type = fields.Selection(
         [
@@ -29,7 +33,9 @@ class ConstructionContract(models.Model):
         tracking=True,
     )
     currency_id = fields.Many2one(
-        "res.currency", default=lambda self: self.env.company.currency_id.id, required=True
+        "res.currency",
+        default=lambda self: self.env.company.currency_id.id,
+        required=True,
     )
     state = fields.Selection(
         [
@@ -87,7 +93,9 @@ class ConstructionContract(models.Model):
         self.filtered(lambda r: r.state == "confirmed").write({"state": "in_progress"})
 
     def action_done(self):
-        self.filtered(lambda r: r.state in ("in_progress", "confirmed")).write({"state": "done"})
+        self.filtered(lambda r: r.state in ("in_progress", "confirmed")).write(
+            {"state": "done"}
+        )
 
     def action_cancel(self):
         self.write({"state": "cancel"})
@@ -119,11 +127,17 @@ class ConstructionContract(models.Model):
                 "invoice_line_ids": [(5, 0, 0)],
             }
         )
-        account_income = self.env.company.get_chart_template_id().property_account_income_categ_id
+        account_income = (
+            self.env.company.get_chart_template_id().property_account_income_categ_id
+        )
         # fallback: buscar primera cuenta de ingresos
         if not account_income:
             account_income = self.env["account.account"].search(
-                [("user_type_id.type", "=", "income"), ("company_id", "=", self.env.company.id)], limit=1
+                [
+                    ("user_type_id.type", "=", "income"),
+                    ("company_id", "=", self.env.company.id),
+                ],
+                limit=1,
             )
         lines = []
         if self.commission_type == "full":
@@ -170,14 +184,15 @@ class ConstructionContractCost(models.Model):
         "construction.contract", string="Contrato", required=True, ondelete="cascade"
     )
     supplier_id = fields.Many2one(
-        "res.partner", string="Proveedor", domain=[("supplier_rank", ">", 0)], required=True
+        "res.partner",
+        string="Proveedor",
+        domain=[("supplier_rank", ">", 0)],
+        required=True,
     )
     description = fields.Char(string="Descripción")
     quantity = fields.Float(default=1.0)
     price_unit = fields.Monetary(string="Precio Unitario", required=True)
-    subtotal = fields.Monetary(
-        string="Subtotal", compute="_compute_subtotal", store=True
-    )
+    subtotal = fields.Monetary(compute="_compute_subtotal", store=True)
     currency_id = fields.Many2one(
         related="contract_id.currency_id", store=True, readonly=True
     )
