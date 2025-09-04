@@ -22,4 +22,10 @@ Odoo para hidraulica VC
 - descargar repositorio en /home/odoo (git clone https://github.com/rrjorgegz/hidraulica.git)
 
 ## Desplegar 
-docker compose -f 'docker-compose.yml' up -d --build'
+docker compose -f 'docker-compose.yaml' up -d --build'
+
+## Desplegar Odoo en [Coolify](https://coolify.io) o [Dokploy](https://dokploy.com) con CI/DI
+
+
+## Proyecto HIDRÁULICA
+![Flujo Hdráulica](Hidraulica_modelado.png)
