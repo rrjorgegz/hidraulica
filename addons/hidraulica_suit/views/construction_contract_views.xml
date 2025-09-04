@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_construction_contract_form" model="ir.ui.view">
+        <field name="name">construction.contract.form</field>
+        <field name="model">construction.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contrato de Obra">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,done,cancel"/>
+                    <button name="action_confirm" type="object" string="Confirmar" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_progress" type="object" string="En Progreso" invisible="state != 'confirmed'"/>
+                    <button name="action_done" type="object" string="Terminar" invisible="state not in ['in_progress','confirmed']"/>
+                    <button name="action_cancel" type="object" string="Cancelar" invisible="state not in ['draft','confirmed','in_progress']"/>
+                    <button name="action_create_invoice" type="object" string="Factura" invisible="state not in ['confirmed','in_progress','done']"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="project_name"/>
+                            <field name="program_id"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                        <group>
+                            <field name="commission_rate"/>
+                            <field name="commission_type"/>
+                            <field name="sale_id" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Costos Proveedores">
+                            <field name="supplier_cost_ids">
+                                <tree editable="bottom">
+                                    <field name="supplier_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal" readonly="1"/>
+                                </tree>
+                            </field>
+                            <group colspan="2" class="oe_right">
+                                <field name="total_supplier_cost" readonly="1"/>
+                                <field name="commission_amount" readonly="1"/>
+                                <field name="amount_to_invoice" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_construction_contract_tree" model="ir.ui.view">
+        <field name="name">construction.contract.tree</field>
+        <field name="model">construction.contract</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="project_name"/>
+                <field name="partner_id"/>
+                <field name="commission_type"/>
+                <field name="total_supplier_cost"/>
+                <field name="commission_amount"/>
+                <field name="amount_to_invoice"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_construction_contract" model="ir.actions.act_window">
+        <field name="name">Contratos de Obra</field>
+        <field name="res_model">construction.contract</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_construction_contract_root" name="Contratación Obras" parent="sale.sale_menu_root" sequence="60"/>
+    <menuitem id="menu_construction_contract" name="Contratos" parent="menu_construction_contract_root" action="action_construction_contract"/>
+
+</odoo>

@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_work_program_all,work_program_all,model_work_program,base.group_user,1,1,1,1
+access_construction_contract_user,construction_contract_user,model_construction_contract,base.group_user,1,1,1,1
+access_construction_contract_cost_user,construction_contract_cost_user,model_construction_contract_cost,base.group_user,1,1,1,1

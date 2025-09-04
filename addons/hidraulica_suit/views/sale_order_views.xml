@@ -10,6 +10,7 @@
                 <page name="hidraulica_tab" string="Información de Hidraulica">
                     <group name="hso1_tab">
                         <group name="hso11_tab">
+                            <field name="construction_contract_id"/>
                             <field name="type_service" />
                             <field name="code_inv" />
                             <field name="program_id" />

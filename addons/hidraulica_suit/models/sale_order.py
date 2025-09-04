@@ -26,54 +26,59 @@ class SaleOrder(models.Model):
     is_citma = fields.Boolean(string="Tiene dictamen del CITMA")
     is_licence = fields.Boolean(string="Tiene licencia de obra")
     is_timeline = fields.Boolean(string="Tiene Cronograma de ejecución de obra")
+    construction_contract_id = fields.Many2one(
+        "construction.contract", string="Contrato de Obra", copy=False
+    )
     commission_type = fields.Selection(
-        [
-            ("full", "Factura Completa (Costos + Comisión)"),
-            ("commission_only", "Solo Comisión"),
-        ],
+        related="construction_contract_id.commission_type",
         string="Tipo de Comisión",
-        default="full",
+        store=True,
+        readonly=False,
     )
 
     def _create_invoices(self):
         invoice = super()._create_invoices()
-        # Calcular costo total de proveedores
-        # (desde facturas vinculadas al centro analítico)
-        total_cost = self.analytic_account_id.total_cost
-        commission = total_cost * 0.05  # 5%
-        # Borrar líneas de factura estándar (generadas desde SO)
-        invoice.invoice_line_ids = False
-        # Añadir línea de comisión
-        invoice.write(
-            {
-                "invoice_line_ids": [
+        for order in self:
+            contract = order.construction_contract_id
+            if not contract:
+                continue
+            inv = invoice.filtered(lambda m: m.invoice_origin == order.name)
+            if not inv:
+                continue
+            inv.invoice_line_ids = [(5, 0, 0)]
+            # Buscar una cuenta de ingresos (primer ingreso disponible)
+            account_income = self.env["account.account"].search(
+                [("account_type", "=", "income"), ("company_id", "=", order.company_id.id)],
+                limit=1,
+            )
+            lines = []
+            if contract.commission_type == "full":
+                lines.append(
                     (
                         0,
                         0,
                         {
-                            "name": "Comisión de Gestión (5%)",
-                            "price_unit": commission,
-                            "account_id": ...,  # Cuenta contable para comisiones
+                            "name": "Reembolso de costos proveedores",
+                            "price_unit": contract.total_supplier_cost,
+                            "quantity": 1,
+                            "account_id": account_income.id,
                         },
                     )
-                ]
-            }
-        )
-        # Si es "full", añadir línea con costos de proveedores
-        if self.commission_type == "full":
-            invoice.write(
-                {
-                    "invoice_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": "Costos de Proveedores",
-                                "price_unit": total_cost,
-                                "account_id": ...,  # Cuenta contable para costos
-                            },
-                        )
-                    ]
-                }
+                )
+            lines.append(
+                (
+                    0,
+                    0,
+                    {
+                        "name": f"Comisión de gestión {contract.commission_rate}%",
+                        "price_unit": contract.commission_amount,
+                        "quantity": 1,
+                        "account_id": account_income.id,
+                    },
+                )
             )
+            inv.write({
+                "invoice_line_ids": lines,
+                "construction_contract_id": contract.id,
+            })
         return invoice
