@@ -1,5 +1,8 @@
 # hidraulica
-Odoo para hidraulica VC 
+Odoo para hidraulica VC.
+
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
+
 ## instalar Odoo en proxmox
 - Create CT de la plantilla ubuntu-20.04-standard_20.04-1_amd64.tar.gz
 - user root y poner la pass 
