@@ -4,7 +4,8 @@ Odoo para hidráulica VC.
 ## Estado-del-proyecto
 ![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
 
-## Descripción-del-proyecto
+## Descripción del Proyecto HIDRÁULICA
+![Flujo Hdráulica](Hidraulica_modelado.png)
 
 ## instalar Odoo en proxmox
 - Create CT de la plantilla ubuntu-20.04-standard_20.04-1_amd64.tar.gz
@@ -31,10 +32,6 @@ Odoo para hidráulica VC.
 docker compose -f 'docker-compose.yaml' up -d --build'
 
 ## Desplegar Odoo en [Coolify](https://coolify.io) o [Dokploy](https://dokploy.com) con CI/DI
-
-
-## Proyecto HIDRÁULICA
-![Flujo Hdráulica](Hidraulica_modelado.png)
 
 ## Autores
 | [<img src="https://avatars.githubusercontent.com/u/101665649?v=4" width=115><br><sub>rrjorgegz</sub>](https://github.com/rrjorgegz) |
